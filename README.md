@@ -7,12 +7,6 @@ Interactive movie recommendation web app built with **Streamlit**. Get top 5 rec
 
 ---
 
-## 🚀 Live Demo
-
-[Open Movie Recommendation System](https://recommendation-model-jdnhm5yqzrb8bvje3eghvk.streamlit.app/)
-
----
-
 ## ✨ Features
 
 - Recommend top 5 similar movies.
