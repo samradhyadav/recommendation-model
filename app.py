@@ -2,6 +2,20 @@ import streamlit as st
 import pickle
 import pandas as pd
 from recommender import recommend
+import os
+import gdown
+
+# Google Drive file ID
+file_id = "17wpMUAyhyGOACQEbS9C16zuZBQlJtFnV"
+output_path = "artifacts/similarity.pkl"
+
+# Create artifacts folder if it doesn't exist
+os.makedirs("artifacts", exist_ok=True)
+
+# Download the file if it doesn't exist
+if not os.path.exists(output_path):
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, output_path, quiet=False)
 
 # Load movie dictionary
 movies_dict = pickle.load(open("artifacts/movie_dict.pkl", "rb"))
@@ -12,7 +26,7 @@ st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wid
 
 # Header
 st.markdown(
-    "<h1 style='text-align: center; color: #FF6347;'>🎬 Movie Recommender System 🍿</h1>",
+    "<h1 style='text-align: center; color: #FF6347;'>🎬 Movie Recommender Model 🍿</h1>",
     unsafe_allow_html=True
 )
 
@@ -27,13 +41,8 @@ if st.button("Recommend"):
 
     if recommendations:
         st.markdown("### 🎯 Top Recommendations")
-
-        # Display recommendations in 5 columns
-        cols = st.columns(5)
-        for idx, (title, poster) in enumerate(recommendations):
-            with cols[idx % 5]:
-                st.image(poster, use_column_width=True)
-                st.markdown(f"<p style='text-align:center'><b>{title}</b></p>", unsafe_allow_html=True)
+        for idx, title in enumerate(recommendations, start=1):
+            st.write(f"{idx}. {title}")
     else:
         st.warning("⚠️ No recommendations found!")
 
